@@ -1,4 +1,18 @@
-export function createMenu(target, menuItems) {
+import { buildSubmenu } from "../buildSubMenu.js";
+import { closeMenu } from "./closeMenu.js";
+import { menuItems } from "./menuItems.js";
+export function createMenu(target, menuItems, closeMenuState) {
+  setTimeout(() => {
+    document.addEventListener("click", close);
+  }, 1);
+
+  function close(e) {
+    if (e.target.id !== "sideMenu") {
+      closeMenu(closeMenuState);
+      document.removeEventListener("click", close);
+    }
+  }
+
   document.getElementById("sideMenu")?.remove();
 
   const menuPanel = document.createElement("aside");
@@ -13,11 +27,7 @@ export function createMenu(target, menuItems) {
     link.innerText = item;
     link.className = "menuItems";
     link.addEventListener("click", () => {
-      document.getElementById("subMenu")?.remove();
-      const subMenu = document.createElement("div");
-      subMenu.id = "subMenu";
-      document.querySelector("#pageContent").append(subMenu);
-      menuItems[item](subMenu);
+      buildSubmenu(item, closeMenuState);
     });
     menuPanel.append(link);
   }

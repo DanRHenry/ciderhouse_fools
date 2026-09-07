@@ -1,80 +1,100 @@
-
-body{
-    background-color: black;
-    color: white;
-    transition: all .5s ease;
-    margin: 0;
-    padding: 0;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* justify-content: center; */
+body {
+  background-color: black;
+  color: white;
+  transition: all 0.5s ease;
+  margin: 0;
+  padding: 0;
 }
 
-#heroImage{
-    /* background-color: red; */
-    min-width: 100vw;
+#heroImage {
+  min-width: 100vw;
 }
 
-nav{
-    width: 100%;
+#navLinks {
+  justify-content: space-evenly;
+  background-color: green;
+}
+
+#navLinks > * {
+  cursor: pointer;
+}
+
+#menuBtn {
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+#navLinks {
+  display: none;
+}
+
+#sideMenu {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  background-color: gray;
+  width: 0;
+  justify-self: right;
+  overflow: hidden;
+  align-items: center;
+}
+
+#sideMenu > div {
+  cursor: pointer;
+  padding-left: 1em;
+}
+
+#sideMenu > div:first-child {
+  padding-top: 1em;
+}
+
+#sideMenu > div:hover {
+  color: rgb(192, 192, 192);
+}
+
+#pageContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#linksSection {
+  display: flex;
+  flex-direction: column;
+}
+
+#contact {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+footer {
+  justify-self: center;
+  position: absolute;
+  bottom: 0;
+}
+
+#social_media {
+  text-align: center;
+}
+
+#social_media > a > img {
+  height: 2em;
+}
+
+/* Modern Range Syntax (Supported in all 2026 browsers) */
+@media (768px <= width) and (orientation: landscape) {
+  #navLinks {
     display: flex;
-    justify-content: right;
-}
+    flex-direction: row;
+  }
 
-#sideMenu{
-    position: absolute;
-    top: 0;
-    height: 100vh;
-    background-color: gray;
-    width: 0;
-    justify-self: right;
-    overflow: hidden;
-    align-items: center;
-    /* padding: 1rem; */
-}
-
-#sideMenu > div{
-        cursor: pointer;
-        padding-left: 1em;
-}
-
-#sideMenu > div:first-child{
-    padding-top: 1em;
-}
-
-#sideMenu > div:hover{
-    color: rgb(192, 192, 192);
-}
-
-#pageContent{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#linksSection{
-    display: flex;
-    flex-direction: column;
-}
-
-#contactSection{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#contact{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-footer{
-    justify-self: center;
-    position: absolute;
-    bottom: 0;
+  #menuBtn {
+    display: none;
+  }
+  /* Equivalent to min-width + orientation */
 }
