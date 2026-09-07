@@ -4,18 +4,48 @@ import { closeMenu } from "./closeMenu.js";
 
 export function menuItems(closeMenuState) {
   const menuItems = {
-    about: (subMenu) => {
+    home: (parent) => {
+      const announcementItems = [
+        "Some shit",
+        "some more shit",
+        "even more shit",
+      ];
+
+      const announcementHeader = document.createElement("div");
+      announcementHeader.innerText = "Check this shit out!";
+      announcementHeader.className = "headers"
+
+      const announcementsSection = document.createElement("div");
+
+      const announcementsList = document.createElement("ul");
+
+      for (let i = 0; i < announcementItems.length; i++) {
+        const announcement = document.createElement("li");
+        announcement.innerText = announcementItems[i];
+        announcementsList.append(announcement);
+      }
+
+    //   const announcementParagraph = document.createElement("p");
+    //   announcementParagraph.innerText = "Some shit";
+
+      announcementsSection.append(announcementsList)
+      parent.append(announcementHeader, announcementsSection)
+    },
+    about: (parent) => {
       const header = document.createElement("div");
       header.innerText = "about this fucking guy";
+      header.className = "headers"
+
       const paragraph = document.createElement("p");
       paragraph.id = "aboutMeParagraph";
       paragraph.innerText = "fucking paragraph";
-      subMenu.append(header, paragraph);
+      parent.append(header, paragraph);
       closeMenu(closeMenuState);
     },
-    calendar: (subMenu) => {
+    calendar: (parent) => {
       const calendarHeader = document.createElement("div");
       calendarHeader.innerText = "fucking calendar";
+      calendarHeader.className = "headers"
 
       const calendarContainer = document.createElement("div");
       calendarContainer.id = "calendarContainer";
@@ -26,10 +56,13 @@ export function menuItems(closeMenuState) {
 
       buildCalendar(calendarGrid);
 
-      subMenu.append(calendarContainer);
+      parent.append(calendarContainer);
       closeMenu(closeMenuState);
     },
-    media: (subMenu) => {
+    media: (parent) => {
+        const mediaSection = document.createElement("div")
+        mediaSection.id = "mediaSection";
+
       const images = [
         {
           url: "#",
@@ -55,18 +88,20 @@ export function menuItems(closeMenuState) {
 
       const header = document.createElement("div");
       header.innerText = "fucking pictures";
+      header.className = "headers"
 
-      subMenu.append(header);
+      parent.append(header);
       for (let i = 0; i < images.length; i++) {
         const image = document.createElement("img");
         image.src = images[i].url;
         image.alt = images[i].alt;
-        subMenu.append(image);
+        mediaSection.append(image);
       }
 
       closeMenu(closeMenuState);
+      parent.append(mediaSection)
     },
-    links: (subMenu) => {
+    links: (parent) => {
       const linksSection = document.createElement("div");
       linksSection.id = "linksSection";
       const links = [
@@ -88,7 +123,9 @@ export function menuItems(closeMenuState) {
         },
       ];
 
-      subMenu.innerText = "fucking links";
+      const linksHeader = document.createElement("div")
+      linksHeader.innerText = "fucking links";
+      linksHeader.className = "headers"
 
       for (let i = 0; i < links.length; i++) {
         const link = document.createElement("a");
@@ -96,12 +133,14 @@ export function menuItems(closeMenuState) {
         link.innerText = links[i].description;
         linksSection.append(link);
       }
-      subMenu.append(linksSection);
+      parent.append(linksHeader, linksSection);
       closeMenu(closeMenuState);
     },
-    contact: (subMenu) => {
+    contact: (parent) => {
       const contactHeader = document.createElement("div");
       contactHeader.innerText = "Contact This Fucking Guy";
+      contactHeader.className = "headers"
+
       const contactForm = document.createElement("form");
       contactForm.name = "contact";
       contactForm.id = "contact";
@@ -150,7 +189,7 @@ export function menuItems(closeMenuState) {
       );
 
       contactSection.append(contactHeader, contactForm);
-      subMenu.append(contactSection);
+      parent.append(contactSection);
       closeMenu(closeMenuState);
     },
   };

@@ -6,17 +6,35 @@ body {
   padding: 0;
 }
 
-#heroImage {
-  min-width: 100vw;
+#siteName{
+  text-align: center;
+}
+
+.navMenuItems{
+  font-size: clamp(10px, 20px, 30px);
+}
+
+.navMenuItems:hover{
+  color: rgb(212, 212, 212);
+  text-shadow: 2px,2px, black;
 }
 
 #navLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 2em;
   justify-content: space-evenly;
   background-color: green;
 }
 
 #navLinks > * {
   cursor: pointer;
+}
+
+#bannerSection{
+  text-align: center;
+  min-width: 100vw;
 }
 
 #menuBtn {
@@ -97,4 +115,22 @@ footer {
     display: none;
   }
   /* Equivalent to min-width + orientation */
+}
+
+#mediaSection{
+  display: flex;
+  flex-wrap: wrap;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* flex-direction: column; */
+}
+
+#mediaSection > *{
+  min-width: 300px;
+}
+
+.headers {
+  text-align: center;
+  text-decoration: underline;
+  font-size: clamp(10px, 20px, 30px);
 }
