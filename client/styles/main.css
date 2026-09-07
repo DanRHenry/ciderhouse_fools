@@ -134,3 +134,8 @@ footer {
   text-decoration: underline;
   font-size: clamp(10px, 20px, 30px);
 }
+
+#calendarContainer > *{
+  display: flex;
+  flex-direction: column;
+}

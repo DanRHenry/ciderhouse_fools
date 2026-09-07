@@ -8,7 +8,6 @@ export function createMenu(target, menuItems, closeMenuState) {
 
   function close(e) {
     if (e.target.id !== "sideMenu") {
-      console.log("closing side menu")
       closeMenu(closeMenuState);
       document.removeEventListener("click", close);
     }

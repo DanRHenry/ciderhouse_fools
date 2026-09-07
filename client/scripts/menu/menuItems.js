@@ -1,6 +1,9 @@
 import { buildCalendar } from "./calendar/buildCalendar.js";
 import { submitContactForm } from "./contact/submitContactForm.js";
 import { closeMenu } from "./closeMenu.js";
+import { calendar_events } from "./calendar/calendar_events.js";
+import { events_media } from "./media/events_media.js";
+import { links } from "./links/links.js";
 
 export function menuItems(closeMenuState) {
   const menuItems = {
@@ -12,8 +15,8 @@ export function menuItems(closeMenuState) {
       ];
 
       const announcementHeader = document.createElement("div");
-      announcementHeader.innerText = "Check this shit out!";
-      announcementHeader.className = "headers"
+      announcementHeader.innerText = "Updates and shit";
+      announcementHeader.className = "headers";
 
       const announcementsSection = document.createElement("div");
 
@@ -25,107 +28,128 @@ export function menuItems(closeMenuState) {
         announcementsList.append(announcement);
       }
 
-    //   const announcementParagraph = document.createElement("p");
-    //   announcementParagraph.innerText = "Some shit";
+      //   const announcementParagraph = document.createElement("p");
+      //   announcementParagraph.innerText = "Some shit";
 
-      announcementsSection.append(announcementsList)
-      parent.append(announcementHeader, announcementsSection)
+      announcementsSection.append(announcementsList);
+      parent.append(announcementHeader, announcementsSection);
     },
     about: (parent) => {
       const header = document.createElement("div");
       header.innerText = "about this fucking guy";
-      header.className = "headers"
+      header.className = "headers";
 
       const paragraph = document.createElement("p");
       paragraph.id = "aboutMeParagraph";
       paragraph.innerText = "fucking paragraph";
-      parent.append(header, paragraph);
+
+      const pictureSection = document.createElement("div");
+
+      const picturesItems = [
+        {
+          url: "#",
+          alt: "picture 1",
+        },
+        {
+          url: "#",
+          alt: "picture 2",
+        },
+        {
+          url: "#",
+          alt: "picture 3",
+        },
+      ];
+
+      for (let i = 0; i < picturesItems.length; i++) {
+        const img = document.createElement("img");
+        img.href = picturesItems[i].url;
+        img.alt = picturesItems[i].alt;
+        pictureSection.append(img);
+      }
+
+      parent.append(header, pictureSection, paragraph);
       closeMenu(closeMenuState);
     },
     calendar: (parent) => {
+        const events = calendar_events
       const calendarHeader = document.createElement("div");
       calendarHeader.innerText = "fucking calendar";
-      calendarHeader.className = "headers"
+      calendarHeader.className = "headers";
 
       const calendarContainer = document.createElement("div");
       calendarContainer.id = "calendarContainer";
-      const calendarGrid = document.createElement("div");
-      calendarGrid.id = "calendar";
 
-      calendarContainer.append(calendarHeader, calendarGrid);
+      const upcomingSection = document.createElement("div");
 
-      buildCalendar(calendarGrid);
+      const upcomingEventsList = document.createElement("ul");
+
+      for (let i = 0; i < events.length; i++) {
+        const line = document.createElement("li");
+        line.innerText = `${events[i].text} `;
+        const desc = document.createElement("div");
+        desc.innerText = events[i].text;
+
+        if (events[i].link) {
+          const btn = document.createElement("a");
+          btn.innerText = events[i].link.textContent;
+          btn.href = events[i].link.url;
+          line.append(btn);
+        }
+        upcomingEventsList.append(line);
+      }
+
+      calendarContainer.append(upcomingEventsList);
 
       parent.append(calendarContainer);
       closeMenu(closeMenuState);
     },
     media: (parent) => {
-        const mediaSection = document.createElement("div")
-        mediaSection.id = "mediaSection";
+      const mediaSection = document.createElement("div");
+      mediaSection.id = "mediaSection";
 
-      const images = [
-        {
-          url: "#",
-          alt: "image 1",
-        },
-        {
-          url: "#",
-          alt: "image 2",
-        },
-        {
-          url: "#",
-          alt: "image 3",
-        },
-        {
-          url: "#",
-          alt: "image 4",
-        },
-        {
-          url: "#",
-          alt: "image 5",
-        },
-      ];
+      const events = events_media
 
       const header = document.createElement("div");
       header.innerText = "fucking pictures";
-      header.className = "headers"
+      header.className = "headers";
 
       parent.append(header);
-      for (let i = 0; i < images.length; i++) {
-        const image = document.createElement("img");
-        image.src = images[i].url;
-        image.alt = images[i].alt;
-        mediaSection.append(image);
+      for (let i = 0; i < Object.keys(events).length; i++) {
+          const event = events[Object.keys(events)[i]];
+        console.log(event);
+
+        const eventHeader = document.createElement("div");
+        eventHeader.className = "headers";
+        eventHeader.innerText = event.name;
+
+        const date = document.createElement("div")
+        date.innerText = event.date
+
+        mediaSection.append(eventHeader, date)
+        for (let i = 0; i < event.media.length; i++) {
+            const media = event.media[i]
+
+            console.log(media.url)
+            console.log(media.alt)
+
+            const image = document.createElement("img")
+            image.src = media.url;
+            image.alt = media.alt;
+            console.log("image:",image)
+            mediaSection.append(image)
+        }
       }
 
       closeMenu(closeMenuState);
-      parent.append(mediaSection)
+      parent.append(mediaSection);
     },
     links: (parent) => {
       const linksSection = document.createElement("div");
       linksSection.id = "linksSection";
-      const links = [
-        {
-          url: "#",
-          description: "link 1",
-        },
-        {
-          url: "#",
-          description: "link 2",
-        },
-        {
-          url: "#",
-          description: "link 3",
-        },
-        {
-          url: "#",
-          description: "link 4",
-        },
-      ];
 
-      const linksHeader = document.createElement("div")
+      const linksHeader = document.createElement("div");
       linksHeader.innerText = "fucking links";
-      linksHeader.className = "headers"
+      linksHeader.className = "headers";
 
       for (let i = 0; i < links.length; i++) {
         const link = document.createElement("a");
@@ -139,7 +163,7 @@ export function menuItems(closeMenuState) {
     contact: (parent) => {
       const contactHeader = document.createElement("div");
       contactHeader.innerText = "Contact This Fucking Guy";
-      contactHeader.className = "headers"
+      contactHeader.className = "headers";
 
       const contactForm = document.createElement("form");
       contactForm.name = "contact";
