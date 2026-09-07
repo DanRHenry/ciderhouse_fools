@@ -61,6 +61,8 @@ body {
 #sideMenu > div {
   cursor: pointer;
   padding-left: 1em;
+  margin-bottom: .5em;
+  font-size: clamp(10px, 20px, 30px);
 }
 
 #sideMenu > div:first-child {
