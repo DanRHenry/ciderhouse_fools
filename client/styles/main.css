@@ -38,6 +38,9 @@ body {
 }
 
 #menuBtn {
+  width: 2em;
+  aspect-ratio: 1/1;
+  font-size: large;
   position: fixed;
   right: 0;
   top: 0;
