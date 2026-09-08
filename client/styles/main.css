@@ -97,10 +97,10 @@ img {
   flex-direction: column;
   justify-content: center;
 }
-
+/* try wrapping in another div, position relative, minheight 100vh */
 footer {
   justify-self: center;
-  position: absolute;
+  /* position: absolute; */
   /* background-color: red; */
   bottom: 0;
   /* width: 100vw; */
@@ -157,6 +157,7 @@ padding: 1em;
   /* width: 40%; */
   min-width: 50px;
   max-width: 40%;
+  cursor: pointer;
 }
 
 .headers {
