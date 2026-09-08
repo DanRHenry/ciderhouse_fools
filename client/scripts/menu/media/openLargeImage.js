@@ -21,5 +21,13 @@ export function openLargeImage(src, alt) {
     imageContainer.append(image)
     subMenu.append(imageContainer)
 
+    document.addEventListener("click", closeImage)
     image.addEventListener("click", () => imageContainer.remove())
+
+    function closeImage(e) {
+        if (e.target.src !== src) {
+            imageContainer.remove()
+            document.removeEventListener("click", closeImage)
+        }
+    }
 }
