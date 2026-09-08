@@ -2,6 +2,8 @@ import { createMenu } from "./menu/createMenu.js";
 import { buildSubmenu } from "./buildSubMenu.js";
 import { menuItems } from "./menu/menuItems.js";
 import { closeMenu } from "./menu/closeMenu.js";
+import { get_media } from "./menu/media/get_media.js";
+
 const copyright = document.getElementById("copyright");
 const date = new Date().getFullYear();
 copyright.innerHTML = `&copy;${date} `;
@@ -78,3 +80,6 @@ item.setAttribute("active", true);
 function closeMenuState() {
   return (menuState = false);
 }
+
+// work on fetching images from server
+// get_media()

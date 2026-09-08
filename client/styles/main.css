@@ -34,7 +34,7 @@ body {
 
 #bannerSection{
   text-align: center;
-  min-width: 100vw;
+  /* min-width: 100vw; */
 }
 
 #menuBtn {
@@ -75,13 +75,13 @@ body {
 #sideMenu > div:hover {
   color: rgb(192, 192, 192);
 }
-
+/* 
 #pageContent {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+} */
 
 #linksSection {
   display: flex;
@@ -98,7 +98,9 @@ body {
 footer {
   justify-self: center;
   position: absolute;
+  /* background-color: red; */
   bottom: 0;
+  /* width: 100vw; */
 }
 
 #social_media {
@@ -122,16 +124,35 @@ footer {
   /* Equivalent to min-width + orientation */
 }
 
+#subMenu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 #mediaSection{
   display: flex;
   flex-wrap: wrap;
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* flex-direction: column; */
+  justify-content: center;
 }
 
-#mediaSection > *{
-  min-width: 300px;
+.headersAndDates{
+  text-align: center;
+}
+
+.imageSections{
+display: flex;
+  gap: 1em;
+width: 100%;
+justify-content: center;
+/* flex-direction: column; */
+}
+
+.imageSections > *{
+  width: 40%;
+  min-width: 200px;
+  max-width: 300px;
 }
 
 .headers {

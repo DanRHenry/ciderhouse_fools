@@ -4,6 +4,7 @@ import { closeMenu } from "./closeMenu.js";
 import { calendar_events } from "./calendar/calendar_events.js";
 import { events_media } from "./media/events_media.js";
 import { links } from "./links/links.js";
+import { openLargeImage } from "./media/openLargeImage.js";
 
 export function menuItems(closeMenuState) {
   const menuItems = {
@@ -118,25 +119,35 @@ export function menuItems(closeMenuState) {
           const event = events[Object.keys(events)[i]];
         console.log(event);
 
+        const headerAndDate = document.createElement("div")
+        headerAndDate.className = "headersAndDates"
+
         const eventHeader = document.createElement("div");
-        eventHeader.className = "headers";
+        eventHeader.className = "media_events";
         eventHeader.innerText = event.name;
 
         const date = document.createElement("div")
         date.innerText = event.date
 
-        mediaSection.append(eventHeader, date)
+        headerAndDate.append(eventHeader, date)
+        mediaSection.append(headerAndDate)
+
+        const imageSection = document.createElement("div")
+        imageSection.className = "imageSections"
+        mediaSection.append(imageSection)
         for (let i = 0; i < event.media.length; i++) {
             const media = event.media[i]
-
-            console.log(media.url)
-            console.log(media.alt)
 
             const image = document.createElement("img")
             image.src = media.url;
             image.alt = media.alt;
-            console.log("image:",image)
-            mediaSection.append(image)
+            image.loading = "lazy";
+            imageSection.append(image)
+
+            image.addEventListener("click", (e)=> {
+              console.log(e.target)
+              openLargeImage(e.target.src, e.target.alt)
+            })
         }
       }
 

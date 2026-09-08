@@ -1,26 +1,28 @@
 const router = require("express").Router();
 const Storage = require("../models/storage.model");
 const jwt = require("jsonwebtoken");
-// const SECRET = process.env.JWT;
+const SECRET = process.env.JWT;
 const multer = require("multer");
 const fs = require("fs");
 const mime = "image/png";
 const encoding = "base64";
 
 const storage = multer.diskStorage({
+  destination: "./media",
   // destination: './uploads',
-  destination: function (req, file, cb) {
-    const userID = jwt.verify(req.headers.authorization, SECRET).id;
-
-    if (!fs.existsSync(`./uploads/${userID}`)) {
-      fs.mkdirSync(`./uploads/${userID}`, { recursive: true });
-    }
-    cb(null, `./uploads/${userID}`);
-  },
+  // destination: function (req, file, cb) {
+  //   const userID = jwt.verify(req.headers.authorization, SECRET).id;
+  //   console.log(userID)
+  //   // if (!fs.existsSync(`./media/${userID}`)) {
+  //   //   fs.mkdirSync(`./media/${userID}`, { recursive: true });
+  //   // }
+  //   cb(null, `./media/${userID}`);
+  // },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
+    // const uniqueSuffix = Date.now();
 
-    cb(null, file.originalname + "_" + uniqueSuffix);
+    // cb(null, file.originalname + "_" + uniqueSuffix);
+    cb(null, file.originalname)
   },
 });
 
@@ -34,11 +36,17 @@ router.post("/upload", upload.single("file"), (req, res) => {
   }
 });
 
-router.get("/photolistings", async (req, res) => {
+router.get("/photolistings/:date/:event/:image_name", async (req, res) => {
   try {
+    console.log("getting photos")
+    const {date, event, image_name} = req.params
+    console.log("date: ", date)
+    console.log("event: ", date)
+    console.log("image_name: ", image_name)
+    console.log("params: ",req.params)
     // const userID = jwt.verify(req.headers.authorization, SECRET).id;
 
-    const imageDir = `./uploads/`;
+    const imageDir = `./media/`;
     if (fs.existsSync(imageDir)) {
       const fileList = [];
       fs.readdirSync(imageDir).forEach((file) => {
@@ -107,114 +115,113 @@ router.get("/imageName/:imageName/:userID", (req, res) => {
   //   .catch((err) => console.error(err));
 });
 
-router.get("/getall", async (req, res) => {
-  console.log("getting all file listings");
-  try {
-    const imageDir = `./uploads/Lunch_Cards/`;
-    if (fs.existsSync(imageDir)) {
-      const fileList = [];
-      function readDir(imageDir) {
-        let path = imageDir;
-        const files = [];
-        fs.readdirSync(imageDir, { withFileTypes: true }).forEach((file) => {
-          files.push(file);
-        });
-        if (files.length > 0) {
-          for (let file of files) {
-            fileList.push(file);
-          }
-        }
-      }
-      readDir(imageDir);
+// router.get("/getall", async (req, res) => {
+//   console.log("getting all file listings");
+//   try {
+//     const imageDir = `./uploads/Lunch_Cards/`;
+//     if (fs.existsSync(imageDir)) {
+//       const fileList = [];
+//       function readDir(imageDir) {
+//         let path = imageDir;
+//         const files = [];
+//         fs.readdirSync(imageDir, { withFileTypes: true }).forEach((file) => {
+//           files.push(file);
+//         });
+//         if (files.length > 0) {
+//           for (let file of files) {
+//             fileList.push(file);
+//           }
+//         }
+//       }
+//       readDir(imageDir);
 
-      if (fileList.length > 0) {
-        res.status(200).json({
-          message: ` exists!`,
-          imagesList: JSON.stringify(fileList),
-        });
-        console.log("sending", fileList);
-      } else {
-        res.status(404).json({
-          message: "no photos found",
-        });
-      }
-    } else {
-      res.status(500).json({
-        message: "no image folder found",
-      });
-    }
-    // const getAllPhotos = await Storage.find({});
+//       if (fileList.length > 0) {
+//         res.status(200).json({
+//           message: ` exists!`,
+//           imagesList: JSON.stringify(fileList),
+//         });
+//         console.log("sending", fileList);
+//       } else {
+//         res.status(404).json({
+//           message: "no photos found",
+//         });
+//       }
+//     } else {
+//       res.status(500).json({
+//         message: "no image folder found",
+//       });
+//     }
+//     // const getAllPhotos = await Storage.find({});
 
-    // getAllPhotos
-    //   ? res.status(200).json({
-    //       message: "All Photos: ",
-    //       getAllPhotos,
-    //     })
-    //   : res.status(404).json({
-    //       message: "No Photos Found",
-    //     });
-  } catch (err) {
-    console.error(err);
-  }
-});
+//     // getAllPhotos
+//     //   ? res.status(200).json({
+//     //       message: "All Photos: ",
+//     //       getAllPhotos,
+//     //     })
+//     //   : res.status(404).json({
+//     //       message: "No Photos Found",
+//     //     });
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
 
-router.get("/getbygrade:grade", async (req, res) => {
-  const { grade } = req.params;
+// router.get("/getbygrade:grade", async (req, res) => {
+//   const { grade } = req.params;
 
-  console.log("getting all file listings for ", grade);
+//   console.log("getting all file listings for ", grade);
 
-  try {
-    const imageDir = `./uploads/Lunch_Cards/${grade}/drawings`;
-    if (fs.existsSync(imageDir)) {
-      const dirContent = []
-      // };
-      fs.readdirSync(imageDir).forEach((dir) => {dirContent.push(dir)})
-      
-      console.log("dirContent: ",dirContent)
+//   try {
+//     const imageDir = `./uploads/Lunch_Cards/${grade}/drawings`;
+//     if (fs.existsSync(imageDir)) {
+//       const dirContent = []
+//       // };
+//       fs.readdirSync(imageDir).forEach((dir) => {dirContent.push(dir)})
 
-      if (dirContent.length > 0) {
-        res.status(200).json({
-          message: ` exists!`,
-          imagesList: JSON.stringify(dirContent),
-        });
-      } else {
-        res.status(404).json({
-          message: "no photos found",
-        });
-      }
-    } else {
-      res.status(500).json({
-        message: "no image folder found",
-      });
-    }
-  } catch (err) {
-    console.error(err);
-  }
-});
+//       console.log("dirContent: ",dirContent)
 
-router.get("/getimagebyname/:imageName/:grade", (req, res) => {
+//       if (dirContent.length > 0) {
+//         res.status(200).json({
+//           message: ` exists!`,
+//           imagesList: JSON.stringify(dirContent),
+//         });
+//       } else {
+//         res.status(404).json({
+//           message: "no photos found",
+//         });
+//       }
+//     } else {
+//       res.status(500).json({
+//         message: "no image folder found",
+//       });
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
 
-  console.log("getting image by name and grade")
-  const {imageName, grade} = req.params
-  console.log("grade: ",grade)
-  console.log("image Name: ",imageName)
-  
-  const imageDir = `./uploads/Lunch_Cards`;
+// router.get("/getimagebyname/:imageName/:grade", (req, res) => {
 
-  const file = fs.readFileSync(`${imageDir}/${grade}/drawings/${imageName}`)
-  const base64Data = file.toString(encoding)
-  const uri = `data:${mime};${encoding},${base64Data}`;
-  file 
-    ? 
-      res.status(200).json({
-      message: "Found image!",
-      uri
-    })
-    : res.status(404).json({
-      message: "image not found"
-    })
-});
+//   console.log("getting image by name and grade")
+//   const {imageName, grade} = req.params
+//   console.log("grade: ",grade)
+//   console.log("image Name: ",imageName)
 
+//   const imageDir = `./uploads/Lunch_Cards`;
+
+//   const file = fs.readFileSync(`${imageDir}/${grade}/drawings/${imageName}`)
+//   const base64Data = file.toString(encoding)
+//   const uri = `data:${mime};${encoding},${base64Data}`;
+//   file
+//     ?
+//       res.status(200).json({
+//       message: "Found image!",
+//       uri
+//     })
+//     : res.status(404).json({
+//       message: "image not found"
+//     })
+// });
 
 // router.post("/upload", upload.single("file"), (req, res) => {
 
